@@ -1,0 +1,114 @@
+[
+  {
+    "type": "amendment",
+    "sectionNumber": "15",
+    "title": "Amendment of section 15",
+    "content": "“(b) after the supply has been effected, if for such discount, a credit note has been issued by the supplier and input tax credit as is attributable to such discount has been reversed by the recipient of the supply, in accordance with the provisions of section 34.”",
+    "amendmentType": "substituted",
+    "effectiveDate": "2026-04-01",
+    "chapter": "Central Goods and Services Tax Act, 2017",
+    "noticeTypes": [],
+    "keywords": [
+      "value of supply",
+      "discount",
+      "credit note",
+      "input tax credit reversal",
+      "recipient",
+      "supplier",
+      "section 34",
+      "supply"
+    ],
+    "category": "input_tax_credit",
+    "source": "FINANCE_ACT_2026",
+    "id": "finance_act_2026_15"
+  },
+  {
+    "type": "amendment",
+    "sectionNumber": "34",
+    "title": "Amendment of section 34",
+    "content": "or where a discount referred to in clause (b) of sub-section (3) of section 15 is given",
+    "amendmentType": "inserted",
+    "effectiveDate": "2026-04-01",
+    "chapter": "Central Goods and Services Tax Act, 2017",
+    "noticeTypes": [],
+    "keywords": [
+      "credit notes",
+      "debit notes",
+      "discount",
+      "section 15",
+      "deficient supplies",
+      "invoicing"
+    ],
+    "category": "invoicing_and_records",
+    "source": "FINANCE_ACT_2026",
+    "id": "finance_act_2026_34"
+  },
+  {
+    "type": "amendment",
+    "sectionNumber": "54",
+    "title": "Amendment of section 54",
+    "content": ", other than cases where refund of tax is claimed on account of goods exported out of India with payment of tax,",
+    "amendmentType": "inserted",
+    "effectiveDate": "2026-04-01",
+    "chapter": "Central Goods and Services Tax Act, 2017",
+    "noticeTypes": [],
+    "keywords": [
+      "refund of tax",
+      "exports",
+      "payment of tax",
+      "sub-section (5)",
+      "sub-section (6)",
+      "goods exported",
+      "India"
+    ],
+    "category": "payment_and_refund",
+    "source": "FINANCE_ACT_2026",
+    "id": "finance_act_2026_54"
+  },
+  {
+    "type": "amendment",
+    "sectionNumber": "101A",
+    "title": "Amendment of section 101A",
+    "content": "‘(1A) Notwithstanding anything contained in sub-section (1), till the National Appellate Authority is constituted under that sub-section, the Government, may on the recommendations of the Council, by notification, empower any existing Authority constituted under any law for the time being in force to hear appeals made under section 101B and in such case,–– (a) the provisions of sub-sections (2) to (13) shall not apply; and (b) any reference to the National Appellate Authority under this Chapter shall be construed as a reference to such Authority. Explanation.––For the purposes of this sub-section, the expression “existing Authority” shall include a Tribunal.’",
+    "amendmentType": "inserted",
+    "effectiveDate": "2026-04-01",
+    "chapter": "Central Goods and Services Tax Act, 2017",
+    "noticeTypes": [],
+    "keywords": [
+      "National Appellate Authority",
+      "appeals",
+      "Government",
+      "Council",
+      "notification",
+      "existing Authority",
+      "Tribunal",
+      "section 101B",
+      "interim arrangement"
+    ],
+    "category": "appeals",
+    "source": "FINANCE_ACT_2026",
+    "id": "finance_act_2026_101A"
+  },
+  {
+    "type": "amendment",
+    "sectionNumber": "13",
+    "title": "Amendment of section 13",
+    "content": "clause (b) shall be omitted.",
+    "amendmentType": "omitted",
+    "effectiveDate": "2026-04-01",
+    "chapter": "Integrated Goods and Services Tax Act, 2017",
+    "noticeTypes": [],
+    "keywords": [
+      "place of supply",
+      "services",
+      "sub-section (8)",
+      "clause (b)",
+      "omission",
+      "IGST Act",
+      "taxability"
+    ],
+    "category": "levy_and_collection",
+    "source": "FINANCE_ACT_2026",
+    "id": "finance_act_2026_13"
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "type": "circular",
+    "circularNumber": "Circular No. 187/19/2022-GST",
+    "subject": "Clarification regarding the treatment of statutory dues under GST law in respect of the taxpayers for whom the proceedings have been finalised under Insolvency and Bankruptcy Code, 2016- reg.",
+    "content": "Attention is invited to Circular No.134/04/2020-GST dated 23rd March, 2020, wherein it was clarified that no coercive action can be taken against the corporate debtor with respect to the dues of the period prior to the commencement of Corporate Insolvency Resolution Process (CIRP). Such dues will be treated as ‘operational debt’ and the claims may be filed by the proper officer before the NCLT in accordance with the provisions of the IBC. 2. Representations have been received from the trade as well as tax authorities, seeking clarification regarding the modalities for implementation of the order of the adjudicating authority under Insolvency and Bankruptcy Code, 2016 (hereinafter referred to as the “IBC”) with respect to demand for recovery against such corporate debtor under Central Goods and Services Tax Act, 2017 (hereinafter referred to as “CGST Act”) as well under the existing laws and the treatment of such statutory dues under CGST Act and existing laws, after finalization of the proceedings under IBC. 3. In order to ensure uniformity in the implementation of the provisions of the law across the field formations, the Board, in exercise of its powers conferred under section 168(1) of the CGST Act, hereby clarifies as follows. 4.1 Section 84 of CGST Act reads as follows: “Section 84 - Continuation and validation of certain recovery proceedings.- Where any notice of demand in respect of any tax, penalty, interest or any other amount payable under this Act, (hereafter in this section referred to as \"Government dues\"), is served upon any taxable person or any other person and any appeal or revision application is filed or any other proceedings is initiated in respect of such Government dues, then- .. (b) where such Government dues are reduced in such appeal, revision or in other proceedings- (i) it shall not be necessary for the Commissioner to serve upon the taxable person a fresh notice of demand; (ii) the Commissioner shall give intimation of such reduction to him and to the appropriate authority with whom recovery proceedings is pending; (iii) any recovery proceedings initiated on the basis of the demand served upon him prior to the disposal of such appeal, revision or other proceedings may be continued in relation to the amount so reduced from the stage at which such proceedings stood immediately before such disposal.” 4.2 As per Section 84 of CGST Act, if the government dues against any person under CGST Act are reduced as a result of any appeal, revision or other proceedings in respect of such government dues, then an intimation for such reduction of government dues has to be given by the Commissioner to such person and to the appropriate authority with whom the recovery proceedings are pending. Further, recovery proceedings can be continued in relation to such reduced amount of government dues. 4.3 The word ‘other proceedings’ is not defined in CGST Act. It is to be mentioned that the adjudicating authorities and appellate authorities under IBC are quasi-judicial authorities constituted to deal with civil disputes pertaining to insolvency and bankruptcy. For instance, under IBC, NCLT serves as an adjudicating authority for insolvency proceedings which are initiated on application from any stakeholder of the entity like the firm, creditors, debtors, employees etc. and passes an order approving the resolution plan. As the proceedings conducted under IBC also adjudicate the government dues pending under the CGST Act or under existing laws against the corporate debtor, the same appear to be covered under the term ‘other proceedings’ in Section 84 of CGST Act. 5. Rule 161 of Central Goods and Services Tax Rules, 2017 prescribes FORM GST DRC-25 for issuing intimation for such reduction of demand specified under section 84 of CGST Act. Accordingly, in cases where a confirmed demand for recovery has been issued by the tax authorities for which a summary has been issued in FORM GST DRC-07/DRC 07A against the corporate debtor, and where the proceedings have been finalised against the corporate debtor under IBC reducing the amount of statutory dues payable by the corporate debtor to the government under CGST Act or under existing laws, the jurisdictional Commissioner shall issue an intimation in FORM GST DRC-25 reducing such demand, to the taxable person or any other person as well as the appropriate authority with whom recovery proceedings are pending. 6. It is requested that suitable trade notices may be issued to publicize the contents of this circular. 7. Difficulty, if any, in the implementation of the above instructions may please be brought to the notice of the Board.",
+    "issuedDate": "2022-12-27",
+    "relatedSections": [
+      "Section 168(1)",
+      "Section 84"
+    ],
+    "noticeTypes": [
+      "DRC-25",
+      "DRC-07",
+      "DRC-07A"
+    ],
+    "keywords": [
+      "Statutory dues",
+      "Insolvency and Bankruptcy Code (IBC)",
+      "Corporate Insolvency Resolution Process (CIRP)",
+      "Operational debt",
+      "NCLT",
+      "Recovery proceedings",
+      "Section 84 CGST Act",
+      "Intimation of demand reduction",
+      "GST DRC-25",
+      "Government dues"
+    ],
+    "category": "demands_and_recovery",
+    "source": "CBIC_CIRCULAR",
+    "id": "cbic_circular_circular_no__187_19_2022_gst"
+  }
+]
