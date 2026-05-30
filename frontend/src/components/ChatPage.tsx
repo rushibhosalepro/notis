@@ -1,12 +1,13 @@
 "use client";
 import { ArrowUp, LoaderCircle, Paperclip, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Message } from "../types";
 import ChatBox from "./ChatBox";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Textarea } from "./ui/textarea";
 import { SERVER_URL } from "../lib/utils";
+import { useCaseStore } from "../stores/useCaseStore";
 
 interface Props {
   userId: string;
@@ -48,23 +49,44 @@ const ChatPage = ({ caseId, userId }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 
+  const { pending, clearPending } = useCaseStore();
+  const hasAutoSent = useRef(false);
+
+  useEffect(() => {
+    if (hasAutoSent.current || !pending) return;
+    const callInitialRequest = async () => {
+      hasAutoSent.current = true;
+      const { prompt, file } = pending;
+      clearPending();
+      await handleChat(prompt, file);
+    };
+
+    callInitialRequest();
+  }, []);
   function clearImageSelection() {
     setFile(null);
     if (fileRef.current) {
       fileRef.current.value = "";
     }
   }
-  async function handleChat() {
-    if (!input.trim() && !file) return;
+  async function handleChat(
+    overridePrompt?: string,
+    overrideFile?: File | null,
+  ) {
+    const currentInput = overridePrompt ?? input;
+    const currentFile = overrideFile !== undefined ? overrideFile : file;
+
+    if (!currentInput.trim() && !currentFile) return;
 
     setLoading(true);
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content: input,
-      ...(file ? { file } : {}),
+      content: currentInput,
+      ...(currentFile ? { file: currentFile } : {}),
     };
+
     const history = [...messages, userMessage];
 
     setMessages((prev) => [...prev, userMessage]);
@@ -288,7 +310,7 @@ const ChatPage = ({ caseId, userId }: Props) => {
                 </div>
 
                 <Button
-                  onClick={handleChat}
+                  onClick={() => handleChat()}
                   disabled={(!input.trim() && !file) || loading}
                   size="icon"
                   className="rounded-full text-gray-400 bg-gray-100/20 hover:bg-gray-100/10 cursor-pointer px-3 hover:text-white disabled:opacity-30"

@@ -8,6 +8,7 @@ import { ArrowUp, LoaderCircle, Paperclip, X } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { SERVER_URL, userId } from "../lib/utils";
+import { useCaseStore } from "../stores/useCaseStore";
 
 const QUICK_PROMPTS = [
   "I got an ASMT-10 notice, what should I do?",
@@ -21,11 +22,14 @@ export default function App() {
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+  const setPending = useCaseStore((s) => s.setPending);
   const router = useRouter();
   const handleSend = async () => {
     try {
       setLoading(true);
-      if (!input || input.trim() === "") return;
+      if (!input.trim() && !file) return;
+
+      setPending({ prompt: input.trim(), file });
       const response = await axios.post(`${SERVER_URL}/cases/start`, {
         prompt: input.trim(),
         userId,
