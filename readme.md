@@ -37,12 +37,13 @@ Upload a GST notice (image or PDF) or describe your situation in plain language.
 5. **Explains everything in plain language** — so the business owner understands what happened and what to do
 
 ![Nōtis Demo](./images/preview4.PNG)
+![Nōtis Demo](./images/preview3.PNG)
 
 ---
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](./images/architecture.png)
+![Architecture Diagram](./images/Capture3.PNG)
 
 ```
 User (notice upload / chat)
