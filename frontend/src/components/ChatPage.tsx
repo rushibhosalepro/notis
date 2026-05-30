@@ -250,7 +250,7 @@ const ChatPage = ({ caseId, userId }: Props) => {
       {/* Scrollable messages */}
       <div className="h-full overflow-y-auto pt-14 pb-44 scroll-smooth">
         <div className="max-w-3xl w-full mx-auto px-4 py-6">
-          <ChatBox messages={messages} />
+          <ChatBox messages={messages} loading={loading} />
         </div>
       </div>
 

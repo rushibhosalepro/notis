@@ -20,6 +20,7 @@ import rehypeHighlight from "rehype-highlight";
 
 interface Props {
   messages: Message[];
+  loading?: boolean;
 }
 
 const Collapsible: React.FC<{
@@ -255,7 +256,7 @@ const FilePreview: React.FC<{ file: File }> = ({ file }) => {
   );
 };
 
-const ChatBox = ({ messages }: Props) => {
+const ChatBox = ({ messages, loading = false }: Props) => {
   return (
     <div className="space-y-6">
       {messages.length === 0 && (
@@ -278,17 +279,18 @@ const ChatBox = ({ messages }: Props) => {
               isUser ? "justify-end" : "justify-start",
             )}
           >
-            {!isUser && (
-              <div className="shrink-0 w-7 h-7 mt-1 rounded-full bg-zinc-800 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-zinc-300" />
-              </div>
-            )}
+            {!isUser &&
+              (msg.content || msg.thinking || msg.toolCalls?.length != 0) && (
+                <div className="shrink-0 w-7 h-7 mt-1 rounded-full bg-zinc-800 flex items-center justify-center">
+                  <Bot className="w-4 h-4 text-zinc-300" />
+                </div>
+              )}
 
             {isUser ? (
-              <div className="flex flex-col items-end gap-2">
+              <div className="flex flex-col w-full items-end gap-2">
                 {msg.file && <FilePreview file={msg.file} />}
                 {msg.content && (
-                  <div className="max-w-[75%] bg-zinc-800 text-zinc-100 px-4 py-2.5 rounded-3xl rounded-tr-md text-[15px] leading-relaxed">
+                  <div className="max-w-[75%]  bg-zinc-800 text-zinc-100 px-4 py-2.5 rounded-3xl rounded-tr-md text-[15px] leading-relaxed">
                     <p className="whitespace-pre-wrap wrap-break-word">
                       {msg.content}
                     </p>
@@ -307,6 +309,14 @@ const ChatBox = ({ messages }: Props) => {
           </div>
         );
       })}
+      {loading && (
+        <div className="flex items-center gap-2">
+          <div className="shrink-0 w-7 h-7 mt-1 rounded-full bg-zinc-800 flex items-center justify-center">
+            <Bot className="w-4 h-4 text-zinc-300" />
+          </div>
+          <p className="text-zinc-300">thinking...</p>
+        </div>
+      )}
     </div>
   );
 };
