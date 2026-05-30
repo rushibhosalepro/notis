@@ -1,9 +1,11 @@
-// import * as pdfParse from "pdf-parse";
+import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 import { readFileSync, writeFileSync } from "fs";
 import path, { join } from "path";
 import { extractText } from "unpdf";
-const pdfParse = require("pdf-parse").default;
+
+// ── Types ──────────────────────────────────────────────────────────────────
+
 interface BaseDocument {
   id: string;
   type: string;
@@ -291,14 +293,8 @@ const FILES: Array<{ configKey: string; file: string }> = [
   { configKey: "cgst_2017", file: "cgst-act-2017.pdf" },
   { configKey: "finance_act_2023", file: "finance-act-2023.pdf" },
   { configKey: "finance_act_2026", file: "finance-act-2026.pdf" },
-  {
-    configKey: "circular",
-    file: "circular-188-20-2022-GST.pdf",
-  },
-  {
-    configKey: "circular",
-    file: "circular-187-19-2022-GST.pdf",
-  },
+  { configKey: "circular", file: "circular-188-20-2022-GST.pdf" },
+  { configKey: "circular", file: "circular-187-19-2022-GST.pdf" },
   { configKey: "sgst_mh", file: "sgst-mh.pdf" },
   { configKey: "sgst_ka", file: "sgst-ka.pdf" },
   { configKey: "sgst_dl", file: "sgst-dl.pdf" },
@@ -309,22 +305,6 @@ const FILES: Array<{ configKey: string; file: string }> = [
 const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
 // ── PDF reader ─────────────────────────────────────────────────────────────
-
-// async function readPDF(filePath: string): Promise<string> {
-//   const buffer = readFileSync(filePath);
-//   const data = await pdfParse(buffer);
-
-//   if (data.text.trim().length < 500) {
-//     throw new Error(
-//       `PDF appears to be scanned/image-based, OCR needed: ${filePath}`,
-//     );
-//   }
-
-//   console.log(
-//     `   Pages: ${data.numpages} | Extracted: ${(data.text.length / 1024).toFixed(1)} KB`,
-//   );
-//   return data.text;
-// }
 
 async function readPDF(filePath: string): Promise<string> {
   const buffer = readFileSync(filePath);
@@ -341,6 +321,9 @@ async function readPDF(filePath: string): Promise<string> {
   console.log(`   Extracted: ${(text.length / 1024).toFixed(1)} KB`);
   return text;
 }
+
+// ── Chunker ────────────────────────────────────────────────────────────────
+
 function chunkText(text: string, size = 8000, overlap = 500): string[] {
   const chunks: string[] = [];
   let i = 0;
@@ -355,17 +338,22 @@ function chunkText(text: string, size = 8000, overlap = 500): string[] {
 
 function generateId(doc: Omit<GSTDocument, "id">): string {
   const src = doc.source.toLowerCase();
+  const d = doc as any;
   switch (doc.type) {
     case "cgst_act":
     case "amendment":
     case "sgst_act":
-      return `${src}_${doc.sectionNumber.replace(/\s+/g, "_")}`;
+      return `${src}_${String(d.sectionNumber ?? "unknown").replace(/\s+/g, "_")}`;
     case "circular":
-      return `${src}_${doc.circularNumber.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase()}`;
+      return `${src}_${String(d.circularNumber ?? "unknown")
+        .replace(/[^a-zA-Z0-9]/g, "_")
+        .toLowerCase()}`;
+    default:
+      return `${src}_${Date.now()}`;
   }
 }
 
-// ── Deduplicator (keep longest content per section) ────────────────────────
+// ── Deduplicator ───────────────────────────────────────────────────────────
 
 function deduplicate(docs: GSTDocument[]): GSTDocument[] {
   const seen = new Map<string, GSTDocument>();
@@ -442,51 +430,6 @@ async function indexToElastic(
 
   console.log(`\n📤 Indexing ${docs.length} docs → ${config.indexName}`);
 
-  // Delete and recreate index
-  await fetch(`${elasticUrl}/${config.indexName}`, {
-    method: "DELETE",
-    headers: { Authorization: `ApiKey ${elasticApiKey}` },
-  });
-
-  await fetch(`${elasticUrl}/${config.indexName}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `ApiKey ${elasticApiKey}`,
-    },
-    body: JSON.stringify({
-      mappings: {
-        properties: {
-          id: { type: "keyword" },
-          type: { type: "keyword" },
-          source: { type: "keyword" },
-          content: { type: "text", analyzer: "english" },
-          keywords: { type: "keyword" },
-          noticeTypes: { type: "keyword" },
-          category: { type: "keyword" },
-          // act + amendment + sgst
-          sectionNumber: { type: "keyword" },
-          title: { type: "text", analyzer: "english" },
-          chapter: { type: "keyword" },
-          // amendment only
-          amendmentType: { type: "keyword" },
-          effectiveDate: { type: "date" },
-          originalContent: { type: "text", analyzer: "english" },
-          // circular only
-          circularNumber: { type: "keyword" },
-          subject: { type: "text", analyzer: "english" },
-          issuedDate: { type: "date" },
-          relatedSections: { type: "keyword" },
-          // sgst only
-          state: { type: "keyword" },
-          deviatesFromCGST: { type: "boolean" },
-          cgstEquivalent: { type: "keyword" },
-        },
-      },
-    }),
-  });
-
-  // Bulk index in batches of 100
   const BATCH = 100;
   for (let i = 0; i < docs.length; i += BATCH) {
     const batch = docs.slice(i, i + BATCH);
@@ -528,6 +471,11 @@ const docsPath = path.join(__dirname);
 async function main() {
   for (const { configKey, file } of FILES) {
     const config = CONFIGS[configKey];
+    if (!config) {
+      console.error(`❌ No config found for key: ${configKey}, skipping`);
+      continue;
+    }
+
     const filePath = join(docsPath, file);
 
     console.log(`\n${"=".repeat(60)}`);
@@ -544,13 +492,9 @@ async function main() {
     }
 
     const docs = await parseDocument(text, config);
-    console.log(
-      `\n   Raw: ${docs.length} | After dedup: ${deduplicate(docs).length}`,
-    );
-
     const deduped = deduplicate(docs);
+    console.log(`\n   Raw: ${docs.length} | After dedup: ${deduped.length}`);
 
-    // Save JSON backup before indexing
     const outFile = join(docsPath, `${configKey}-parsed.json`);
     writeFileSync(outFile, JSON.stringify(deduped, null, 2));
     console.log(`💾 ${outFile}`);
@@ -562,11 +506,14 @@ async function main() {
   console.log("🎉 All documents parsed and indexed");
 }
 
-main().catch(console.error);
-
 async function uploadFromJson() {
   for (const { configKey } of FILES) {
     const config = CONFIGS[configKey];
+    if (!config) {
+      console.error(`❌ No config found for key: ${configKey}, skipping`);
+      continue;
+    }
+
     const filePath = join(docsPath, `${configKey}-parsed.json`);
 
     console.log(`\n${"=".repeat(60)}`);
@@ -590,4 +537,7 @@ async function uploadFromJson() {
   console.log(`\n${"=".repeat(60)}`);
   console.log("🎉 All JSON files uploaded to Elastic");
 }
-// uploadFromJson().catch(console.error); // ← just re-index from saved JSONs
+
+// ── Entry point ────────────────────────────────────────────────────────────
+// main().catch(console.error);
+uploadFromJson().catch(console.error);

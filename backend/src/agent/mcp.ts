@@ -27,8 +27,9 @@ export class MCP {
   async callTool(name: string, args: Record<string, unknown>): Promise<string> {
     this.ensureConnected();
     const result = await this.client.callTool({ name, arguments: args });
-
-    return (result?.content[0] as { text: string }).text;
+    const content = result?.content as Array<{ text: string }> | unknown[];
+    const first = content?.[0] as { text?: string } | undefined;
+    return first?.text ?? JSON.stringify(result);
   }
 
   async close(): Promise<void> {

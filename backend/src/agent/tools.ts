@@ -168,20 +168,20 @@ export const buildToolRegistry = async (
   const schemas = [...elasticSchemas, ...mongoToolSchemas, ...manualToolSchema];
 
   // 3. Single execute function — routes to correct handler
+  // Single execute function — routes to correct handler
   const execute = async (
     name: string,
     args: Record<string, unknown>,
     context: AgentContext,
   ): Promise<string> => {
     // Manual tools (analyze_file, ask_user)
-    if (name in manualTools) {
+    const manualTool = manualTools[name];
+    if (manualTool) {
       console.log(`[Registry] → Manual: ${name}`);
-      return manualTools[name](args, context) ?? "";
+      return manualTool(args, context);
     }
 
     // MongoDB tools
-    // tools.ts — pass context through to executeMongoTool
-
     const mongoNames = [
       "update_case_status",
       "save_draft_response",
@@ -189,13 +189,12 @@ export const buildToolRegistry = async (
     ];
     if (mongoNames.includes(name)) {
       console.log(`[Registry] → MongoDB: ${name}`);
-      return executeMongoTool(name, args, context); // ← context was already there, just forward it
+      return executeMongoTool(name, args, context);
     }
 
     // Elastic MCP tools (everything else)
     console.log(`[Registry] → Elastic: ${name}`);
     return elasticMCP.callTool(name, args);
   };
-
   return { schemas, execute };
 };

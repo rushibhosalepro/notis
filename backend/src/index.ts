@@ -1,14 +1,13 @@
-import express from "express";
+import "dotenv/config";
 import cors from "cors";
-import { casesCol } from "./utils/db/mongo";
-import type { Case, Message } from "./types";
+import express from "express";
 import { ObjectId } from "mongodb";
-import { Orchestrator } from "./agent/orchestrator";
-import { GoogleGenAI } from "@google/genai";
 import multer from "multer";
 import path from "path";
-import fs from "fs";
 import { ai } from "./agent/client";
+import { Orchestrator } from "./agent/orchestrator";
+import type { Case, Message } from "./types";
+import { casesCol } from "./utils/db/mongo";
 
 const app = express();
 app.use(cors());
