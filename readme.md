@@ -2,6 +2,8 @@
 
 > **60 million small businesses in India receive GST notices every year. Nōtis gives them a CA in their pocket, for free.**
 
+**🚀 [Try Nōtis Live](https://notis-hazel.vercel.app/)** | **📹 [Watch Demo](https://youtu.be/46WcDlWhIeE)**
+
 ![Nōtis Banner](./images/home.PNG)
 
 ---
@@ -38,6 +40,13 @@ Upload a GST notice (image or PDF) or describe your situation in plain language.
 
 ![Nōtis Demo](./images/preview4.PNG)
 ![Nōtis Demo](./images/preview3.PNG)
+
+---
+
+## 🎬 Demo & Deployment
+
+- **Live Demo**: https://notis-hazel.vercel.app/
+- **Video Demo**: https://youtu.be/46WcDlWhIeE (3 min walkthrough)
 
 ---
 
